@@ -1,5 +1,5 @@
 import { useLocalSearchParams } from 'expo-router';
-import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 
 
 const {width} = Dimensions.get('window');
@@ -21,7 +21,7 @@ const OrphanageProfile = () => {
     style={styles.imageSlider}
     >
       {imagesArray.map((uri,index) => (
-        <Image key={index} source={{uri}} style={styles.image}/>
+        <Image key={index} source={{ uri}} style={styles.image}/>
       ))}
     </ScrollView>
     {/*Orphanage Details*/}

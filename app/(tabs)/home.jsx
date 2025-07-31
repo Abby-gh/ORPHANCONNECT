@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router';
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity,View } from 'react-native';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 
 const HomeScreen =() => {
@@ -309,7 +309,7 @@ const orphanage = [
       location: "Tamale, Northern",
       description: "Focus on girls' education.",
       needs: ["Sanitary Products", "School Dresses", "Hair Care Items"],
-      image: [
+      images: [
          require('../../assets/orphans24.jpeg'),
            require('../../assets/logo50.jpeg'),
              require('../../assets/logo51.jpeg'),
@@ -321,7 +321,7 @@ const orphanage = [
       location: "Tema, Greater Accra",
       description: "Former street children rehabilitation.",
       needs: ["Counseling Materials", "Art Therapy Supplies", "Recreational Items"],
-      image: [
+      images: [
          require('../../assets/orphans25.jpeg'),
            require('../../assets/logo52.jpeg'),
              require('../../assets/logo53.jpeg'),
@@ -390,11 +390,11 @@ const orphanage = [
             location: item.location,
             description: item.description,
             needs: item.needs.join(','),
-            images: item.images ? item.images.map((img) => Image.resolveAssetSource(img).uri).join(','):'',
+            images: item.images ? item.images.map((img) => ({uri:img})) :  [],
           },
         })
 
-      }
+     }
     >
       {mainImage ? (
       <Image source={mainImage} style={styles.image}/>

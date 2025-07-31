@@ -1,5 +1,8 @@
+import { useRouter } from 'expo-router';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
 import {
+  Alert,
   Image,
   StyleSheet,
   Text,
@@ -7,23 +10,41 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { auth } from '../../components/firebase';
 
-const LoginScreen = () => {
+
+const Login = () => {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  
 
-  const handleLogin = () => {
-    if (email === 'user@example.com' && password === 'password123') {
-      router.push('/home'); // ✅ Navigates only when login is correct
-    } else {
-      alert('Invalid email or password'); // ❌ Shows alert only when needed
+  const handleLogin = async () => {
+    console.log('Test: Button was tapped');
+    if (!email || ! password) {
+      Alert.alert('Missing info', 'Please enter both email and password.');
+      return;
+      
+    };
+    try{
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      // user sign in
+      const user = userCredential.user;
+      console.log('Login success:', user)
+      Alert.alert('Success', 'Logged in successfully');
+      router.replace('/(tabs)/home'); // this takes to the home screen
     }
+catch (error) {
+  Alert.alert('Login failed', error.message);
+  return;
+}
   };
+
+
 
   return (
     <View style={styles.container}>
+      <Text style ={styles.title}>OrphanConnect login</Text>
       <Image
         source={require('../../assets/logo.jpg')}
         style={styles.logoImage}
@@ -33,24 +54,29 @@ const LoginScreen = () => {
       <TextInput
         style={styles.input}
         placeholder="Email"
-        keyboardType="email-address" 
         value={email}
+        keyboardType="email-address" 
         onChangeText={setEmail}
+        autoCapitalize='none'
       />
 
       <TextInput
         style={styles.input}
         placeholder="Password"
-        secureTextEntry
         value={password}
+        secureTextEntry
         onChangeText={setPassword}
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+      <TouchableOpacity style={[styles.loginButton,{backgroundColor:'orange'}] }
+        onPress={handleLogin}
+        >
         <Text style={styles.buttonText}>Log in</Text>
+    
       </TouchableOpacity>
 
-      <TouchableOpacity>
+      <TouchableOpacity  onPress={() => router.push('/signup')}>
+        <Text style={styles.signup}>Do not an account already</Text>
         <Text style={styles.signup}>Sign up</Text>
       </TouchableOpacity>
     </View>
@@ -71,7 +97,7 @@ formcontainer: {
     marginBottom: 20, 
   },
   input: {
-    backgroundColor: 'fff',
+    backgroundColor: '#fff',
     borderRadius:8,
     marginBottom: 16,
     width:'100%',
@@ -97,4 +123,4 @@ formcontainer: {
 
 });
 
-export default LoginScreen;
+export default Login;
