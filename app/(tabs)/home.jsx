@@ -1,9 +1,6 @@
-import { useRouter } from 'expo-router';
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View, SafeAreaView } from 'react-native';
 
-const HomeScreen =() => {
-const router = useRouter();
 
 const orphanage = [
   //  orphanages in Ghana
@@ -377,68 +374,76 @@ const orphanage = [
       ],
     }
   ];
-  const renderOrphanage =({item}) => {
-    const mainImage = item.images && item.images.length > 0 ? item.images[0]: null;
-    return(
-      <TouchableOpacity
-      style={styles.card}
-      onPress={() =>
-        router.push({
-          pathname: '/orphanageProfile',
-          params:{
-            name: item.name,
-            location: item.location,
-            description: item.description,
-            needs: item.needs.join(','),
-            images: item.images ? item.images.map((img) => ({uri:img})) :  [],
-          },
-        })
-
-     }
-    >
-      {mainImage ? (
-      <Image source={mainImage} style={styles.image}/>
-      ):(
-        <Text>No image available</Text>
-      )}
-      <View>
-        <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.location}>{item.location}</Text>
-        </View>
+  const  HomeScreen =() =>{
+  const renderOrphanage =({item}) => (
+      <TouchableOpacity style ={orphanage.card}>
+      <Image source={item.image} style={styles.orphanageImage}/>
+      <View style={styles.orphanageInfo}>
+        <Text style={styles.orphanageName}>{item.location}</Text>
+        <Text style={styles.orphanageLocation}>
+          {item.location}
+        </Text>
+        <Text style={styles.orphanageDescription}>
+          {item.description}
+        </Text>
+      </View>
         </TouchableOpacity>
-    );
-  };
+    )
 return(
-      <FlatList
+      <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+        <Text style={styles.header}>
+          Orphanages in Ghana
+          </Text>
+          <FlatList
         data={orphanage}
         renderItem={renderOrphanage}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContainer}
       />
+      </SafeAreaView>
 );
 };
+
 const styles = StyleSheet.create({
-  listContainer: {
-    padding: 10,
-  },
-  card: {
-    backgroundColor: '#f5f5f5',
-    padding: 10,
-    borderRadius: 10,
-    marginBottom: 15,
-  },
-  image: {
-    width: '100%',
-    height: 120,
-    borderRadius: 5,
-    marginBottom: 4,
-  },
-  name: {
+  header: {
+    fontSize: 22,
     fontWeight: 'bold',
-    fontSize: 16,
+    textAlign: 'center',
+    paddingVertical: 20,
+    backgroundColor: '#f2f2f2',
+    color: '#333',
   },
-  location: {
-    color: '#777',
+  listContainer: {
+    paddingBottom: 20,
+  },
+  orphanageCard: {
+    margin: 10,
+    borderRadius: 10,
+    overflow: 'hidden',
+    backgroundColor: '#fff',
+    elevation: 3,
+  },
+  orphanageImage: {
+    width: '100%',
+    height: 200,
+  },
+  orphanageInfo: {
+    padding: 10,
+  },
+  orphanageName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#2c3e50',
+  },
+  orphanageLocation: {
+    fontSize: 14,
+    color: '#7f8c8d',
+    marginTop: 4,
+  },
+  orphanageDescription: {
+    fontSize: 14,
+    marginTop: 6,
+    color: '#555',
   },
 });
 

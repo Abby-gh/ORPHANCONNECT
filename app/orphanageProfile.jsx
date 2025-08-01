@@ -1,5 +1,5 @@
 import { useLocalSearchParams } from 'expo-router';
-import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 
 const {width} = Dimensions.get('window');
