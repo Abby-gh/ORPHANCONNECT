@@ -1,5 +1,8 @@
 
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View, SafeAreaView } from 'react-native';
+import { useRouter } from 'expo-router';
+
+const router = useRouter();
 
 
 const orphanage = [
@@ -37,7 +40,7 @@ const orphanage = [
       description: "Supporting children with special needs.",
       needs: ["Wheelchairs", "Therapy Equipment", "Medication"],
       images: [
-         require('../../assets/logo9.jpeg'),
+         require('../../assets/orphans2.jpeg'),
          require('../../assets/logo10.jpeg'),
          require('../../assets/logo11.jpeg'),
       ],
@@ -114,7 +117,7 @@ const orphanage = [
       description: "Rehabilitation for former child soldiers.",
       needs: ["Art Supplies", "Sports Equipment", "Counseling Books"],
       images:[
-        require('../../assets/orphans.jpeg'),
+        require('../../assets/orphans8.jpeg'),
          require('../../assets/logo20.jpeg'),
           require('../../assets/logo21.jpeg'),
       ],
@@ -376,7 +379,9 @@ const orphanage = [
   ];
   const  HomeScreen =() =>{
   const renderOrphanage =({item}) => (
-      <TouchableOpacity style ={orphanage.card}>
+      <TouchableOpacity style ={orphanage.card}
+        onPress={() => router.push('/orphanage/${item.id')}
+        >
       <Image source={item.image} style={styles.orphanageImage}/>
       <View style={styles.orphanageInfo}>
         <Text style={styles.orphanageName}>{item.location}</Text>

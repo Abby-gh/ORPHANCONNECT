@@ -44,7 +44,7 @@ catch (error) {
 
   return (
     <View style={styles.container}>
-      <Text style ={styles.title}>OrphanConnect login</Text>
+  <View style ={styles.formcontainer}></View>
       <Image
         source={require('../../assets/logo.jpg')}
         style={styles.logoImage}
