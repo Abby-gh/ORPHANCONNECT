@@ -4,6 +4,9 @@ import { useState } from 'react';
 import {
   Alert,
   Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -16,7 +19,7 @@ const Login = () => {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [hidePassword, setHidePassword] = useState(true); // 👈 new state
+  const [hidePassword, setHidePassword] = useState(true);
 
   const handleLogin = async () => {
     console.log('Test: Button was tapped');
@@ -37,84 +40,110 @@ const Login = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.formcontainer}></View>
-      <Image
-        source={require('../../assets/logo.jpg')}
-        style={styles.logoImage}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        keyboardType="email-address"
-        onChangeText={setEmail}
-        autoCapitalize="none"
-      />
-
-      <View style={styles.passwordContainer}>
-        <TextInput
-          style={styles.passwordInput}
-          placeholder="Password"
-          value={password}
-          secureTextEntry={hidePassword}
-          onChangeText={setPassword}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+    >
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Image
+          source={require('../../assets/logo.jpg')}
+          style={styles.logoImage}
         />
-        <TouchableOpacity onPress={() => setHidePassword(!hidePassword)}>
-          <Text style={styles.toggleText}>
-            {hidePassword ? 'Show' : 'Hide'}
-          </Text>
+
+        <Text style={styles.title}>Welcome Back!</Text>
+
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          value={email}
+          keyboardType="email-address"
+          onChangeText={setEmail}
+          autoCapitalize="none"
+        />
+
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={styles.passwordInput}
+            placeholder="Password"
+            value={password}
+            secureTextEntry={hidePassword}
+            onChangeText={setPassword}
+          />
+          <TouchableOpacity onPress={() => setHidePassword(!hidePassword)}>
+            <Text style={styles.toggleText}>
+              {hidePassword ? 'Show' : 'Hide'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity
+          style={styles.loginButton}
+          onPress={handleLogin}
+        >
+          <Text style={styles.buttonText}>Log in</Text>
         </TouchableOpacity>
-      </View>
 
-      <TouchableOpacity
-        style={[styles.loginButton, { backgroundColor: 'orange' }]}
-        onPress={handleLogin}
-      >
-        <Text style={styles.buttonText}>Log in</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={() => router.push('/signup')}>
-        <Text style={styles.signup}>Do not have an account?</Text>
-        <Text style={styles.signup}>Sign up</Text>
-      </TouchableOpacity>
-    </View>
+        <View style={styles.signupContainer}>
+          <Text style={styles.signupText}>Don’t have an account?</Text>
+          <TouchableOpacity onPress={() => router.push('/signup')}>
+            <Text style={styles.signupLink}> Sign up</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
-  formcontainer: {
-    width: '90%',
-    maxWidth: 400,
-    alignSelf: 'auto',
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
   },
   logoImage: {
-    width: 150,
-    height: 150,
+    width: 120,
+    height: 120,
     resizeMode: 'contain',
-    alignSelf: 'center',
     marginBottom: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 30,
   },
   input: {
     backgroundColor: '#fff',
-    position: 'relative',
-    left: 450,
-    borderRadius: 8,
-    marginBottom: 16,
+    borderRadius: 10,
+    padding: 15,
     width: '40%',
-    padding: 12,
+    marginBottom: 15,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    borderWidth: 1,
+    borderColor: '#ccc',
   },
   passwordContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    position: 'relative',
-    left: 450,
-    width: '40%',
-    borderRadius: 8,
     backgroundColor: '#fff',
-    paddingHorizontal: 10,
-    marginBottom: 16,
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    width: '40%',
+    marginBottom: 15,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
     borderWidth: 1,
     borderColor: '#ccc',
   },
@@ -124,30 +153,32 @@ const styles = StyleSheet.create({
   },
   toggleText: {
     color: '#1e88e5',
-    fontWeight: 'bold',
+    fontWeight: '600',
   },
   loginButton: {
-    backgroundColor: '#00aeefff',
-    position: 'relative',
-    left: 620,
-    width: '20%',
-    padding: 15,
-    borderRadius: 8,
+    backgroundColor: '#f9a825',
+    paddingVertical: 15,
+    paddingHorizontal: 40,
+    borderRadius: 10,
     alignItems: 'center',
-    fontWeight: 'bold',
+    elevation: 3,
+    width: '20%',
   },
   buttonText: {
-    color: 'black',
-    fontWeight: 'bold',
-  },
-  signup: {
     color: '#000',
     fontWeight: 'bold',
-    textAlign: 'center',
-    marginTop: 15,
-    position: 'relative',
-    left: 450,
-    width: '40%',
+    fontSize: 16,
+  },
+  signupContainer: {
+    flexDirection: 'row',
+    marginTop: 20,
+  },
+  signupText: {
+    color: '#555',
+  },
+  signupLink: {
+    color: '#1e88e5',
+    fontWeight: 'bold',
   },
 });
 

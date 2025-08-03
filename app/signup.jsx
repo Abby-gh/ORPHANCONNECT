@@ -19,9 +19,9 @@ const SignUpScreen = () => {
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [age, setAge] = useState('');
+  const [hidePassword, setHidePassword] = useState(true); 
 
   const handleSignUp = async () => {
-    console.log('sign up button clicked');
     if (!email || !password || !fullName || !age) {
       Alert.alert('Error', 'Please fill out all fields');
       return;
@@ -76,18 +76,23 @@ const SignUpScreen = () => {
         onChangeText={setEmail}
         autoCapitalize="none"
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        secureTextEntry
-        onChangeText={setPassword}
-      />
+
+      <View style={styles.passwordContainer}>
+        <TextInput
+          style={styles.passwordInput}
+          placeholder="Password"
+          value={password}
+          secureTextEntry={hidePassword}
+          onChangeText={setPassword}
+        />
+        <TouchableOpacity onPress={() => setHidePassword(!hidePassword)}>
+          <Text style={styles.toggleText}>{hidePassword ? 'Show' : 'Hide'}</Text>
+        </TouchableOpacity>
+      </View>
 
       <TouchableOpacity
         style={[styles.loginButton, { backgroundColor: 'green' }]}
         onPress={handleSignUp}
-
       >
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
@@ -100,13 +105,14 @@ const SignUpScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  formcontainer: {
-   width: '90%',
-   maxWidth:400,
-   alignSelf: 'auto',
-  
+  container: {
+    paddingTop: 60,
   },
-
+  formcontainer: {
+    width: '90%',
+    maxWidth: 400,
+    alignSelf: 'auto',
+  },
   logoImage: {
     width: 150,
     height: 150,
@@ -121,21 +127,43 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   input: {
- backgroundColor: '#fff',
-    position:'relative',
+    backgroundColor: '#fff',
+    position: 'relative',
     left: 450,
-    borderRadius:8,
+    borderRadius: 8,
     marginBottom: 16,
-    width:'40%',
+    width: '40%',
     padding: 10,
+  },
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'relative',
+    left: 450,
+    width: '40%',
+    borderRadius: 8,
+    backgroundColor: '#fff',
+    paddingHorizontal: 10,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#ccc',
+  },
+  passwordInput: {
+    flex: 1,
+    paddingVertical: 12,
+  },
+  toggleText: {
+    color: '#1e88e5',
+    fontWeight: 'bold',
+    paddingHorizontal: 10,
   },
   loginButton: {
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
-    width:'20%',
-    position:'relative',
-    left:550,
+    width: '20%',
+    position: 'relative',
+    left: 550,
   },
   buttonText: {
     color: 'white',
@@ -146,19 +174,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 8,
-    width:'90%',
-  
+    width: '90%',
   },
-  signupButton:{
+  signupButton: {
     backgroundColor: '#00aeefff',
-    position:'relative',
+    position: 'relative',
     left: 650,
-    width:'20%',
+    width: '20%',
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
-    fontWeight:'bold', 
-  }
+    fontWeight: 'bold',
+  },
 });
 
 export default SignUpScreen;
