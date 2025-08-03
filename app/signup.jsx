@@ -100,7 +100,13 @@ const SignUpScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, justifyContent: 'center' },
+  formcontainer: {
+   width: '90%',
+   maxWidth:400,
+   alignSelf: 'auto',
+  
+  },
+
   logoImage: {
     width: 150,
     height: 150,
@@ -115,18 +121,21 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   input: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
+ backgroundColor: '#fff',
+    position:'relative',
+    left: 450,
+    borderRadius:8,
     marginBottom: 16,
-    padding: 12,
-    borderColor: '#ccc',
-    borderWidth: 1,
+    width:'40%',
+    padding: 10,
   },
   loginButton: {
     padding: 15,
     borderRadius: 8,
     alignItems: 'center',
-    marginTop: 10,
+    width:'20%',
+    position:'relative',
+    left:550,
   },
   buttonText: {
     color: 'white',
@@ -136,8 +145,20 @@ const styles = StyleSheet.create({
     color: '#000',
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 15,
+    marginTop: 8,
+    width:'90%',
+  
   },
+  signupButton:{
+    backgroundColor: '#00aeefff',
+    position:'relative',
+    left: 650,
+    width:'20%',
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+    fontWeight:'bold', 
+  }
 });
 
 export default SignUpScreen;
